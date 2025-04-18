@@ -1,26 +1,4 @@
 import os
-import sys
-import subprocess
-import tempfile
-import streamlit as st
-
-# Now attempt to install and import the required packages
-def install_packages():
-    try:
-        __import__('langchain_community')
-    except ImportError:
-        st.info("Installing required packages...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", 
-                             "langchain", "langchain-community", 
-                             "faiss-cpu", "huggingface-hub", 
-                             "sentence-transformers"])
-        st.success("Packages installed successfully! The app will restart now.")
-        st.experimental_rerun()
-
-# Run the installation function
-install_packages()
-
-import os
 import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
