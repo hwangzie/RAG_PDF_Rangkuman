@@ -38,7 +38,7 @@ def setup_rag(vector_store, huggingface_api_token):
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_api_token
     
     llm = HuggingFaceHub(
-        repo_id="bigscience/T0pp",
+        repo_id="tiiuae/falcon-7b-instruct",
         model_kwargs={"temperature": 0.5, "max_length": 512}
     )
     
