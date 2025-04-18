@@ -9,7 +9,7 @@ from langchain.llms import HuggingFaceHub
 import tempfile
 
 # Set your API token here
-DEFAULT_API_TOKEN = ""
+DEFAULT_API_TOKEN = st.secrets["DEFAULT_API_TOKEN"]
 
 # Keep your existing helper functions
 def load_document(file_path):
