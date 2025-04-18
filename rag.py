@@ -1,5 +1,26 @@
 import os
 import streamlit as st
+import sys
+import subprocess
+
+# Check and install required packages
+def install_packages():
+    try:
+        import langchain_community
+    except ImportError:
+        st.info("Installing required packages...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", 
+                             "langchain", "langchain-community", 
+                             "faiss-cpu", "huggingface-hub", 
+                             "sentence-transformers"])
+        st.success("Packages installed successfully! The app will restart now.")
+        st.experimental_rerun()
+
+# Run the package installation check at startup
+install_packages()
+
+import os
+import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
