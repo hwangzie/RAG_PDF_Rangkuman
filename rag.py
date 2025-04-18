@@ -1,12 +1,13 @@
 import os
-import streamlit as st
 import sys
 import subprocess
+import tempfile
+import streamlit as st
 
-# Check and install required packages
+# Now attempt to install and import the required packages
 def install_packages():
     try:
-        import langchain_community
+        __import__('langchain_community')
     except ImportError:
         st.info("Installing required packages...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", 
@@ -16,7 +17,7 @@ def install_packages():
         st.success("Packages installed successfully! The app will restart now.")
         st.experimental_rerun()
 
-# Run the package installation check at startup
+# Run the installation function
 install_packages()
 
 import os
