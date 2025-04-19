@@ -39,10 +39,18 @@ def create_vector_store(chunks):
 def setup_rag(vector_store, huggingface_api_token):
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_api_token
     
-
+    # Import the tokenizer explicitly
+    from transformers import MT5Tokenizer, MT5ForConditionalGeneration
+    
+    # Load model and tokenizer separately
+    model_name = "google/mt5-base"
+    model = MT5ForConditionalGeneration.from_pretrained(model_name)
+    tokenizer = MT5Tokenizer.from_pretrained(model_name)
+    
     text_generator = pipeline(
         "text2text-generation", 
-        model="google/mt5-base",
+        model=model,
+        tokenizer=tokenizer,
         model_kwargs={"temperature": 0.5, "max_length": 512}
     )
     
