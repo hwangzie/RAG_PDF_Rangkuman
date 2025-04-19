@@ -30,7 +30,7 @@ def split_document(document, chunk_size=1000, chunk_overlap=200):
     return chunks
 
 def create_vector_store(chunks):
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-mpnet-base-v2")
     vector_store = FAISS.from_documents(chunks, embeddings)
     return vector_store
 
@@ -38,7 +38,7 @@ def setup_rag(vector_store, huggingface_api_token):
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_api_token
     
     llm = HuggingFaceHub(
-        repo_id="google/t5-v1_1-small",
+        repo_id="google/flan-t5-base",
         model_kwargs={"temperature": 0.5, "max_length": 512}
     )
     
