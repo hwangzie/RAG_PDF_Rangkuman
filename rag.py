@@ -6,6 +6,8 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.chains import RetrievalQA
 from langchain.llms import HuggingFaceHub
+from transformers import pipeline
+from langchain.llms import HuggingFacePipeline
 import tempfile
 
 # Set your API token here
@@ -37,11 +39,14 @@ def create_vector_store(chunks):
 def setup_rag(vector_store, huggingface_api_token):
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_api_token
     
-    llm = HuggingFaceHub(
-        repo_id="google/mt5-base",
-        task="text2text-generation",
+
+    text_generator = pipeline(
+        "text2text-generation", 
+        model="google/mt5-base",
         model_kwargs={"temperature": 0.5, "max_length": 512}
     )
+    
+    llm = HuggingFacePipeline(pipeline=text_generator)
     
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
